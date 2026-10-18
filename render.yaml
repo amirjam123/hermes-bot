@@ -1,10 +1,11 @@
 services:
-  - type: worker
+  - type: web
     name: hermes-bot
     runtime: python
     plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: python bot.py
+    healthCheckPath: /
     envVars:
       - key: TELEGRAM_BOT_TOKEN
         sync: false
@@ -14,3 +15,5 @@ services:
         value: gemini-3.5-flash-lite
       - key: HERMES_ADMIN_CHAT_ID
         sync: false
+      - key: PORT
+        value: 10000

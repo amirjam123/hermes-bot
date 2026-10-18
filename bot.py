@@ -4,8 +4,10 @@
 import asyncio
 import logging
 import os
+import threading
 import uuid
 from datetime import datetime
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from dotenv import load_dotenv
 from telegram import Update
@@ -268,6 +270,28 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
 
 
 # ---------------------------------------------------------------------------
+# Keep-alive HTTP server (required for Render free Web Service)
+# ---------------------------------------------------------------------------
+def start_keep_alive() -> None:
+    port = int(os.getenv("PORT", "10000"))
+
+    class HealthHandler(BaseHTTPRequestHandler):
+        def do_GET(self):  # noqa: N802
+            self.send_response(200)
+            self.send_header("Content-Type", "text/plain")
+            self.end_headers()
+            self.wfile.write(b"OK")
+
+        def log_message(self, *args):  # silence logs
+            return
+
+    httpd = HTTPServer(("0.0.0.0", port), HealthHandler)
+    thread = threading.Thread(target=httpd.serve_forever, daemon=True)
+    thread.start()
+    logger.info("Keep-alive HTTP server listening on port %s", port)
+
+
+# ---------------------------------------------------------------------------
 # Lifecycle
 # ---------------------------------------------------------------------------
 async def post_init(application: Application) -> None:
@@ -309,6 +333,7 @@ def main() -> None:
     app.add_error_handler(error_handler)
 
     logger.info("Starting Hermes bot with polling...")
+    start_keep_alive()
     app.run_polling(allowed_updates=Update.ALL_TYPES)
 
 
