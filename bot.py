@@ -30,7 +30,7 @@ TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "").strip()
 GEMINI_API_KEY = (
     os.getenv("GEMINI_API_KEY") or os.getenv("HERMES_API_KEY") or ""
 ).strip()
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash").strip()
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite").strip()
 HERMES_ADMIN_CHAT_ID = os.getenv("HERMES_ADMIN_CHAT_ID", "").strip()
 
 logging.basicConfig(
