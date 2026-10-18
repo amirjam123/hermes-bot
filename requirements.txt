@@ -1,0 +1,11 @@
+# python-telegram-bot v20+ (async)
+python-telegram-bot>=20.7
+
+# Google Gemini SDK (official)
+google-genai>=1.0.0
+
+# In-process async scheduler for cron/interval jobs
+APScheduler>=3.10.4
+
+# Environment variable loading
+python-dotenv>=1.0.1

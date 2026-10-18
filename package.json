@@ -1,0 +1,21 @@
+{
+  "name": "hermes-bot",
+  "version": "1.0.0",
+  "description": "Hermes autonomous Telegram agent powered by the official Google Gemini API, running 24/7 on Render free tier.",
+  "main": "index.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "node scripts/test-credentials.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@google/genai": "^1.30.0",
+    "dotenv": "^16.6.1",
+    "node-cron": "^3.0.3",
+    "node-telegram-bot-api": "^0.67.0"
+  }
+}
